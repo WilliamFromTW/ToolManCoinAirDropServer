@@ -110,8 +110,10 @@ class MyTimerTask extends TimerTask {
 	       System.out.println(result);
 	       wr.close();
 	       reader.close();
-         return true;
-    	
+	       if( result.indexOf("error")==-1)
+             return false;
+	       else
+	    	 return true;
     }
 	private String getUrl(String sWallet,String sWalletPublicKey,String sAirDropNumber,String sSenderSecretPhrase) {
 		  //String sReturn = "requestType=sendMoney&recipient=TMC-FPZJ-27JU-6UF2-ASF34&recipientPublicKey=3c3164bec2d060306780cc0a199999853f7e98fafcffa611e616740dce5a4453&amountNQT=1000000000&feeNQT=100000000&secretPhrase=allow scene possess grade spiral control like mountain nature autumn bring any&deadline=1440";
