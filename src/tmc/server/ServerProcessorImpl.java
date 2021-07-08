@@ -23,23 +23,8 @@ public class ServerProcessorImpl extends ServerProcessor{
   }
    
   public void destory(){
-    Socket aTmpConn = null;
-    OutputStreamWriter aTmpOSW = null;
     _log.info("call super.destory()");
     super.destory();
-    try{
-      if( aClientInfo!=null ){
-        _log.info("tell all client someone offline : "+aClientInfo.getWallet());
-        for(int i=0;i<pool.size();i++){
-          aTmpConn = ((ServerProcessor)pool.get(i)).getConnection();
-          aTmpOSW = new  OutputStreamWriter(aTmpConn.getOutputStream(),sOutputEncode);
-          aTmpOSW.write(CMD_OFFLINE+aClientInfo.getWallet()+"\r\n");
-          aTmpOSW.flush();
-        }
-      }
-    }catch(Exception ex){
-      _log.info("destory exception : " + ex.toString() );
-    }
   }
 
   public void init(){
@@ -79,7 +64,7 @@ public class ServerProcessorImpl extends ServerProcessor{
         	//System.out.println("REG info = " +aCmd.toString().trim().substring(CMD_REG.length()).trim()+"\r\n");
         setupClientInfo(aCmd.toString().trim().substring(CMD_REG.length()).trim());
         aHM = new HashMap();
-        aHM.put("Cmd",ServerProcessor.SEND_ALL );
+        aHM.put("Cmd",ServerProcessor.SEND_BACK );
         aHM.put("Data","\r\nWallet:"+aClientInfo.getWallet()+" registered , from " + connection.getRemoteSocketAddress() +"\r\n");
         aCmd = new StringBuffer("");
         return aHM;

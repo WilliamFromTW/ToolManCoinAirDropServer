@@ -5,7 +5,7 @@
    gradle jar => generate jar file    
        
 ### StartUp     
-1. Modify server.properties in ToolManCoinAirDropServer-xxx.jar file      
+1. Modify server.properties     
 "PROP_SENDER_WALLET_PASSPHRASE"  your pass phrase        
 "PROP_GAIN_PERIOD" gain 1 dollar period     
 "PROP_TRANSFER_COIN_NUMBER" minimum number transfer to client wallet    

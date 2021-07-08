@@ -27,7 +27,9 @@ public class ServerGlobal{
     try{
     	;
       serverSettings = new Properties();
-      InputStreamReader ir = new InputStreamReader(ServerGlobal.class.getClassLoader().getResourceAsStream(SERVER_CONFIG_FILE),FILE_ENCODE);
+//      InputStreamReader ir = new InputStreamReader(ServerGlobal.class.getClassLoader().getResourceAsStream(SERVER_CONFIG_FILE),FILE_ENCODE);
+      InputStreamReader ir = new InputStreamReader(new FileInputStream(new File(SERVER_CONFIG_FILE)),FILE_ENCODE);
+
  	  serverSettings.load(ir);
  	  ir.close();
  	}catch(Exception ex){
