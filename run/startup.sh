@@ -1,1 +1,1 @@
-java -Xmx768M -cp .;./ToolManCoinAirDropServer-1.0b1.jar tmc.server.AirDropServer 168
+java -Xmx768M -cp .:./ToolManCoinAirDropServer-1.0b1.jar tmc.server.AirDropServer 168
