@@ -63,9 +63,9 @@ class MyTimerTask extends TimerTask {
 	      aTmpConn = aServerProcessor.getConnection();
 	      try {
 	        OutputStreamWriter aTmpOSW = new  OutputStreamWriter(aTmpConn.getOutputStream(),ServerGlobal.FILE_ENCODE);
-            aTmpOSW.write("wallet:"+aClientInfo.getWallet()+" got dirdrop , current unpaid airdrop = "+ aClientInfo.getAirDropNumber()+"\r\n");
+            aTmpOSW.write(java.time.LocalDate.now()+" "+java.time.LocalTime.now()+" unpaid airdrop is "+ aClientInfo.getAirDropNumber()+"\r\n");
             if( aClientInfo.getAirDropNumber()>= Integer.parseInt(Server.sTransferCoinNumber .trim())) {
-                aTmpOSW.write("Reach min transfer coin number , try to transfer coin for you \r\n");
+                aTmpOSW.write("reach minimum transfer coin number , try to transfer coin for you \r\n");
                 try {
                   if( transferCoin(aClientInfo.getWallet(),aClientInfo.getWalletPublicKey(),aClientInfo.getAirDropNumber()) )
                 	  aClientInfo.setAirDropNumber(0);
