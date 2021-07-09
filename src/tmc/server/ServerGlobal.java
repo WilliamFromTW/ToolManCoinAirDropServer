@@ -11,6 +11,7 @@ public class ServerGlobal{
   public static final String PROP_SENDER_WALLET_PASSPHRASE = "PROP_SENDER_WALLET_PASSPHRASE";
   public static final String PROP_TRANSFER_COIN_NUMBER = "PROP_TRANSFER_COIN_NUMBER";
   public static final String PROP_GAIN_PERIOD = "PROP_GAIN_PERIOD";
+  public static final String PROP_LISTEN_PORT = "PROP_LISTEN_PORT";
 
   public static final String SERVER_CONFIG_FILE = "server.properties";
   private static final Logger _log = Logger.getLogger(ServerGlobal.class.getName());

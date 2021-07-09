@@ -11,7 +11,7 @@ public class AirDropServer {
   public static void main(String arg[]){
     Server server  = new Server();
     try{
-      server.start(Integer.parseInt(arg[0]),"tmc.server.ServerProcessorImpl");
+      server.start(Integer.parseInt(ServerGlobal.getProperties(ServerGlobal.PROP_LISTEN_PORT)),"tmc.server.ServerProcessorImpl");
     }catch(Exception ex){
       ex.printStackTrace();
     }
