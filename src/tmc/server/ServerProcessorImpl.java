@@ -40,8 +40,8 @@ public class ServerProcessorImpl extends ServerProcessor{
 	  else {
 		if( AllClientInfo.get(sData[0])==null ) {
 		//	System.out.println("wallet="+sData[0]+",publickey="+sData[1]);
-		  aClientInfo.setWallet(sData[0]);
-		  aClientInfo.setWalletPublicKey(sData[1]);
+		  aClientInfo.setWallet(sData[0].trim());
+		  aClientInfo.setWalletPublicKey(sData[1].trim());
 		  AllClientInfo.put(sData[0], aClientInfo);
 		}
 		else {
