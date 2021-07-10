@@ -1,3 +1,8 @@
+2021/07/10(v1.0b2)
+--
+1.fix bug  one wallet get multiple airdrop
+2.new command "UNPAID COIN" to inform client
+
 2021/07/09(v1.0b1)
 --
 1. first version

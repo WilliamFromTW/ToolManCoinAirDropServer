@@ -12,11 +12,12 @@ public class ServerProcessorImpl extends ServerProcessor {
 	private StringBuffer aCmd = null;
 	private boolean bRegStatus = false;// not register
 	private HashMap aHM;
-	public static String CMD_REG = "REG";
-	public static String CMD_ONLINE = "ONLINE";
-	public static String CMD_OFFLINE = "OFFLINE";
-	public static String CMD_DISPLAY = "DISPLAY";
-	public static String CMD_EXIT = "EXIT";
+	public static final String CMD_REG = "REG";
+	public static final String CMD_ONLINE = "ONLINE";
+	public static final String CMD_OFFLINE = "OFFLINE";
+	public static final String CMD_DISPLAY = "DISPLAY";
+	public static final String CMD_EXIT = "EXIT";
+	public static final String CMD_UNPAID_COIN = "UNPAID_COIN";
 
 	public ServerProcessorImpl() {
 		super(ServerGlobal.FILE_ENCODE, ServerGlobal.FILE_ENCODE);
@@ -38,13 +39,18 @@ public class ServerProcessorImpl extends ServerProcessor {
 		if (sData.length != 2)
 			throw new Exception("parameter size error");
 		else {
-			if (AllClientInfo.get(sData[0]) == null) {
+			String sWallet = sData[0].trim();
+			String sWalletPublicKey = sData[1].trim();
+			if (AllClientInfo.get(sWallet) == null) {
 				// System.out.println("wallet="+sData[0]+",publickey="+sData[1]);
-				aClientInfo.setWallet(sData[0].trim());
-				aClientInfo.setWalletPublicKey(sData[1].trim());
-				AllClientInfo.put(sData[0], aClientInfo);
+				ClientInfo aTmpClientInfo = new ClientInfo();
+				aTmpClientInfo.setWallet(sWallet);
+				aTmpClientInfo.setWalletPublicKey(sWalletPublicKey);
+				AllClientInfo.put(sWallet, aTmpClientInfo);
+				aClientInfo = aTmpClientInfo;
+			
 			} else {
-				aClientInfo = AllClientInfo.get(sData[0]);
+				aClientInfo = AllClientInfo.get(sWallet);
 			}
 		}
 	}
@@ -60,8 +66,8 @@ public class ServerProcessorImpl extends ServerProcessor {
 			if (aCmd.toString().toUpperCase().indexOf(CMD_REG) != -1) {
 				bRegStatus = true;
 				try {
-					// System.out.println("REG info = "
-					// +aCmd.toString().trim().substring(CMD_REG.length()).trim()+"\r\n");
+					 System.out.println("REG info = "
+					 +aCmd.toString().trim().substring(CMD_REG.length()).trim()+"\r\n");
 					setupClientInfo(aCmd.toString().trim().substring(CMD_REG.length()).trim());
 					aHM = new HashMap();
 					aHM.put("Cmd", ServerProcessor.SEND_BACK);

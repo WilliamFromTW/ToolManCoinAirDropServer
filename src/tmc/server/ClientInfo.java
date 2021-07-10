@@ -5,6 +5,7 @@ public class ClientInfo {
 	private String sWallet = null;
 	private String sWalletPublicKey = null;
 	private int iAirDropNumber = 0;
+	private boolean bIsAirDropped = false;
 	
 	public ClientInfo() {};
 	
@@ -14,6 +15,14 @@ public class ClientInfo {
 		
 	}
 
+	public void setAirDropped(boolean b) {
+		this.bIsAirDropped = b;
+	}
+	public boolean getAirDropped() {
+		return this.bIsAirDropped;
+	}
+
+	
 	public void setWallet(String sWallet) {
 		this.sWallet = sWallet;
 	}

@@ -24,7 +24,7 @@ abstract public class ServerProcessor implements Cloneable {
    protected Socket connection = null;
    protected OutputStreamWriter out = null;
    protected InputStreamReader in = null;
-   protected ClientInfo aClientInfo = new ClientInfo();
+   protected ClientInfo aClientInfo = null;
    public static String sInputEncode = null;
    public static String sOutputEncode = null;
    public static final String SEND_CLOSE = "server_close";
@@ -162,6 +162,10 @@ abstract public class ServerProcessor implements Cloneable {
     OutputStreamWriter aTmpOSW = null;
     if(true){
       try {
+    	if( connection.getKeepAlive()==false) {
+    	  System.out.println("Socket keep alive = false , try to set enable");
+    	  connection.setKeepAlive(true);
+    	}
         out = new OutputStreamWriter(connection.getOutputStream(),sOutputEncode);
         in = new InputStreamReader(connection.getInputStream(),sInputEncode);
         int c;

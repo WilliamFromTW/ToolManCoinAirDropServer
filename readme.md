@@ -13,3 +13,6 @@
 2. Execute    
 java -Xmx768M -cp .;./ToolManCoinAirDropServer-1.0b1.jar tmc.server.AirDropServer 
   
+#### PS
+1. client unpaid coin will gone and can not roll back after server stop     
+ 
