@@ -1,3 +1,7 @@
+2021/07/10(v1.0b3)
+--
+feedback current unpaid coin information when register
+
 2021/07/10(v1.0b2)
 --
 1.fix bug  one wallet get multiple airdrop

@@ -66,13 +66,16 @@ public class ServerProcessorImpl extends ServerProcessor {
 			if (aCmd.toString().toUpperCase().indexOf(CMD_REG) != -1) {
 				bRegStatus = true;
 				try {
+					
 					 System.out.println("REG info = "
 					 +aCmd.toString().trim().substring(CMD_REG.length()).trim()+"\r\n");
 					setupClientInfo(aCmd.toString().trim().substring(CMD_REG.length()).trim());
 					aHM = new HashMap();
+					String sData = "Wallet:" + aClientInfo.getWallet() + " registered , from "
+							+ connection.getRemoteSocketAddress() + "\r\n"+ CMD_UNPAID_COIN+   aClientInfo.getAirDropNumber()+"\r\n";
+					System.out.println("sData="+sData);
 					aHM.put("Cmd", ServerProcessor.SEND_BACK);
-					aHM.put("Data", "\r\nWallet:" + aClientInfo.getWallet() + " registered , from "
-							+ connection.getRemoteSocketAddress() + "\r\n");
+					aHM.put("Data",sData );
 					aCmd = new StringBuffer("");
 					return aHM;
 				} catch (Exception ee) {
