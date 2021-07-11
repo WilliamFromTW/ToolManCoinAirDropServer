@@ -165,6 +165,9 @@ abstract public class ServerProcessor implements Cloneable {
     	if( connection.getKeepAlive()==false) {
     	  System.out.println("Socket keep alive = false , try to set enable");
     	  connection.setKeepAlive(true);
+    	  connection.setTcpNoDelay(true);
+//    	  connection.setSoLinger(true, 1);
+//    	  connection.setSoTimeout( Integer.parseInt(ServerGlobal.PERIOD_TIME.trim()) + 30000);
     	}
         out = new OutputStreamWriter(connection.getOutputStream(),sOutputEncode);
         in = new InputStreamReader(connection.getInputStream(),sInputEncode);

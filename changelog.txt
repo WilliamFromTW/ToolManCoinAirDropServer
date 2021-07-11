@@ -1,3 +1,7 @@
+2021/07/12(v1.0b4)
+--
+performance tuning
+
 2021/07/10(v1.0b3)
 --
 feedback current unpaid coin information when register

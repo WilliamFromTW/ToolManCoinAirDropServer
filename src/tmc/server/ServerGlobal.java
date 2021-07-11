@@ -12,6 +12,8 @@ public class ServerGlobal{
   public static final String PROP_TRANSFER_COIN_NUMBER = "PROP_TRANSFER_COIN_NUMBER";
   public static final String PROP_GAIN_PERIOD = "PROP_GAIN_PERIOD";
   public static final String PROP_LISTEN_PORT = "PROP_LISTEN_PORT";
+  public static String TRANSFER_COIN_NUMBER = ServerGlobal.getProperties(ServerGlobal.PROP_TRANSFER_COIN_NUMBER);
+  public static final String PERIOD_TIME = ServerGlobal.getProperties(ServerGlobal.PROP_GAIN_PERIOD);;
 
   public static final String SERVER_CONFIG_FILE = "server.properties";
   private static final Logger _log = Logger.getLogger(ServerGlobal.class.getName());

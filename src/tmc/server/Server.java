@@ -19,8 +19,6 @@ public class Server {
 	private static final Logger _log = Logger.getLogger(Server.class.getName());
 	protected static String sSenderSecretPhrase = ServerGlobal
 			.getProperties(ServerGlobal.PROP_SENDER_WALLET_PASSPHRASE);
-	protected static String sTransferCoinNumber = ServerGlobal.getProperties(ServerGlobal.PROP_TRANSFER_COIN_NUMBER);
-	private static final String PERIOD_TIME = ServerGlobal.getProperties(ServerGlobal.PROP_GAIN_PERIOD);;
 
 	/**
 	 * entry point of this class.
@@ -31,7 +29,7 @@ public class Server {
 		// set the port to listen on
 		TimerTask timerTask = new MyTimerTask(System.currentTimeMillis());
 		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(timerTask, 1000, Integer.parseInt(PERIOD_TIME));
+		timer.scheduleAtFixedRate(timerTask, 1000, Integer.parseInt(ServerGlobal.PERIOD_TIME.trim()));
 		try {
 			ss = new ServerSocket(iPort);
 			_log.info("Accepting connections on port " + ss.getLocalPort());
@@ -61,50 +59,73 @@ class MyTimerTask extends TimerTask {
 
 	@Override
 	public void run() {
-		long runningTime = System.currentTimeMillis() - this.startTime;
 		for (int i = 0; i < ServerProcessor.pool.size(); i++) {
 			aServerProcessor = ((ServerProcessor) ServerProcessor.pool.get(i));
 			aClientInfo = aServerProcessor.getClientInfo();
 			try {
+				if(aClientInfo==null) continue;
 				aClientInfo.setAirDropped(false);
 			} catch (Exception ee) {
 				ee.printStackTrace();
 			}
 		}
-		for (int i = 0; i < ServerProcessor.pool.size(); i++) {
+		int j = ServerProcessor.pool.size();
+		for (int i = 0; i < j; i++) {
 			aServerProcessor = ((ServerProcessor) ServerProcessor.pool.get(i));
 			aClientInfo = aServerProcessor.getClientInfo();
+			if(aClientInfo==null) continue;
 			try {
 				aTmpConn = aServerProcessor.getConnection();
 				// System.out.println("is reachable");
 				if (aClientInfo != null && aClientInfo.getWallet() != null) {
-					if (aClientInfo.getAirDropped() == false) {
+				//	if (aClientInfo.getAirDropped() == false) {
 					//	System.out.println("inet addresss=" + aTmpConn.getInetAddress() + ",wallet;"
 					//			+ aClientInfo.getWallet() + ",publickey:" + aClientInfo.getWalletPublicKey()
 					//			+ ",airdrop:" + aClientInfo.getAirDropNumber());
-						aClientInfo.increase(1);
-						aClientInfo.setAirDropped(true);
-					}
+					//}
+					PrintWriter out = new PrintWriter(aTmpConn.getOutputStream(), true);
+					/*
 					OutputStreamWriter aTmpOSW = new OutputStreamWriter(aTmpConn.getOutputStream(),
 							ServerGlobal.FILE_ENCODE);
 					// System.out.println("is output shutdown?"+ aTmpConn.isOutputShutdown());
 					aTmpOSW.write((DateTimeFormatter.ofPattern("yy-MM-dd HH:mm:ss", Locale.ENGLISH).format(LocalDateTime.now())) + " unpaid airdrop is "
 							+ aClientInfo.getAirDropNumber() + "\r\n");
 					aTmpOSW.write(ServerProcessorImpl.CMD_UNPAID_COIN+ aClientInfo.getAirDropNumber() + "\r\n");
-					if (aClientInfo.getAirDropNumber() >= Integer.parseInt(Server.sTransferCoinNumber.trim())) {
-						aTmpOSW.write("reach minimum transfer coin number , try to transfer coin for you \r\n");
-						try {
-							if (transferCoin(aClientInfo.getWallet(), aClientInfo.getWalletPublicKey(),
-									aClientInfo.getAirDropNumber()))
-								aClientInfo.setAirDropNumber(0);
-						} catch (Exception eeee) {
-							eeee.printStackTrace();
-						}
-					}
 					aTmpOSW.flush();
+					*/
+					String sTmpTime = DateTimeFormatter.ofPattern("MM/dd HH:mm:ss", Locale.ENGLISH).format(LocalDateTime.now());
+				//	else 
+					if (aClientInfo.getAirDropped() == false)  {
+						aClientInfo.setAirDropped(true);
+						aClientInfo.increase(1);
+						if (aClientInfo.getAirDropNumber() >= Integer.parseInt(ServerGlobal.TRANSFER_COIN_NUMBER.trim())) {
+							out.println(sTmpTime+"  minimum transfer coin number is reached, transfer coin for you ");
+//							aTmpOSW.write("\r\n");
+							try {
+								if (transferCoin(aClientInfo.getWallet(), aClientInfo.getWalletPublicKey(),
+										aClientInfo.getAirDropNumber()))
+									aClientInfo.setAirDropNumber(0);
+							} catch (Exception eeee) {
+								eeee.printStackTrace();
+							}
+						}
+						
+					}					
+					out.println(sTmpTime + " unpaid coin : "+aClientInfo.getAirDropNumber());
+					out.println(ServerProcessorImpl.CMD_UNPAID_COIN+ aClientInfo.getAirDropNumber());
+					out.flush();
+					System.out.println(sTmpTime + " try to check PrintWriter.checkError() for inet address :\r\n"+aTmpConn.getRemoteSocketAddress());
+					if (out.checkError()) {
+						System.out.println("PrintWriter.checkError=true");
+						continue;
+			//			aClientInfo.setAirDropped(true);
+				//		continue;
+					}
+				
 				}
 			} catch (Exception eee) {
 				// System.out.println("is notreachable");
+				aClientInfo.setAirDropped(false);
 				eee.printStackTrace();
 			}
 		}
