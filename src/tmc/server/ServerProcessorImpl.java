@@ -36,21 +36,30 @@ public class ServerProcessorImpl extends ServerProcessor {
 	private void setupClientInfo(String sInfo) throws Exception {
 		String[] sData = sInfo.split(",");
 		// System.out.println("reg token size = "+sData.length);
-		if (sData.length != 2)
+		if (sData.length < 2 && sData.length >3 )
 			throw new Exception("parameter size error");
 		else {
 			String sWallet = sData[0].trim();
 			String sWalletPublicKey = sData[1].trim();
+//			String sWalletPublicKey = ServerGlobal.TRANSFER_COIN_NUMBER;
 			if (AllClientInfo.get(sWallet) == null) {
 				// System.out.println("wallet="+sData[0]+",publickey="+sData[1]);
 				ClientInfo aTmpClientInfo = new ClientInfo();
 				aTmpClientInfo.setWallet(sWallet);
 				aTmpClientInfo.setWalletPublicKey(sWalletPublicKey);
+				if( sData.length==3)
+					aTmpClientInfo.setTranferCoinNumber( Integer.parseInt(sData[2].trim()) );
+				else 
+					aTmpClientInfo.setTranferCoinNumber( Integer.parseInt( ServerGlobal.TRANSFER_COIN_NUMBER  ) );
 				AllClientInfo.put(sWallet, aTmpClientInfo);
 				aClientInfo = aTmpClientInfo;
 			
 			} else {
 				aClientInfo = AllClientInfo.get(sWallet);
+				if( sData.length==3)
+					aClientInfo.setTranferCoinNumber( Integer.parseInt(sData[2].trim()) );
+				else 
+					aClientInfo.setTranferCoinNumber( Integer.parseInt( ServerGlobal.TRANSFER_COIN_NUMBER  ) );
 			}
 		}
 	}

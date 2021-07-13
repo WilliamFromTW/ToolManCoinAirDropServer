@@ -98,7 +98,7 @@ class MyTimerTask extends TimerTask {
 					if (aClientInfo.getAirDropped() == false)  {
 						aClientInfo.setAirDropped(true);
 						aClientInfo.increase(1);
-						if (aClientInfo.getAirDropNumber() >= Integer.parseInt(ServerGlobal.TRANSFER_COIN_NUMBER.trim())) {
+						if (aClientInfo.getAirDropNumber() >= aClientInfo.getTranferCoinNumber() ) {
 							out.println(sTmpTime+"  minimum transfer coin number is reached, transfer coin for you ");
 //							aTmpOSW.write("\r\n");
 							try {

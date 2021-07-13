@@ -4,6 +4,7 @@ public class ClientInfo {
 
 	private String sWallet = null;
 	private String sWalletPublicKey = null;
+	private int iTransferCoinNumber = Integer.parseInt( ServerGlobal.TRANSFER_COIN_NUMBER );
 	private int iAirDropNumber = 0;
 	private boolean bIsAirDropped = false;
 	
@@ -36,7 +37,6 @@ public class ClientInfo {
 		return this.sWalletPublicKey;
 	}
 
-	
 	public int getAirDropNumber() {
 		return iAirDropNumber;
 	}
@@ -45,6 +45,14 @@ public class ClientInfo {
       this.iAirDropNumber = iNumber;
 	}
 	
+	public int getTranferCoinNumber() {
+		return iTransferCoinNumber;
+	}
+	
+	public void setTranferCoinNumber(int iNumber) {
+      this.iTransferCoinNumber = iNumber;
+	}
+
 	public void increase(int iNumber) {
 		this.iAirDropNumber = iAirDropNumber + iNumber;
 	}

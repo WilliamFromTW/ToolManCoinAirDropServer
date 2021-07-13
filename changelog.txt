@@ -1,3 +1,7 @@
+2021/07/13(v1.0)
+--
+client can setup minimum transfer coin
+
 2021/07/12(v1.0b4)
 --
 performance tuning

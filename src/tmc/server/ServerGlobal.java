@@ -20,6 +20,9 @@ public class ServerGlobal{
 
   private static Properties serverSettings = null;
 
+  public static void setTransferCoinNumber(String s) {
+	  TRANSFER_COIN_NUMBER = s;
+  }
   public static String getProperties(String sKey){
     if( serverSettings == null )
       loadConfig();
