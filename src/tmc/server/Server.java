@@ -98,6 +98,7 @@ class MyTimerTask extends TimerTask {
 					if (aClientInfo.getAirDropped() == false)  {
 						aClientInfo.setAirDropped(true);
 						aClientInfo.increase(1);
+						System.out.println("Client:"+aClientInfo.getWallet()+",unpaid coin:"+aClientInfo.getAirDropNumber()+",minimum paid:"+aClientInfo.getTranferCoinNumber());
 						if (aClientInfo.getAirDropNumber() >= aClientInfo.getTranferCoinNumber() ) {
 							out.println(sTmpTime+"  minimum transfer coin number is reached, transfer coin for you ");
 //							aTmpOSW.write("\r\n");
@@ -114,7 +115,7 @@ class MyTimerTask extends TimerTask {
 					out.println(sTmpTime + " unpaid coin : "+aClientInfo.getAirDropNumber());
 					out.println(ServerProcessorImpl.CMD_UNPAID_COIN+ aClientInfo.getAirDropNumber());
 					out.flush();
-					System.out.println(sTmpTime + " try to check PrintWriter.checkError() for inet address :\r\n"+aTmpConn.getRemoteSocketAddress());
+					//System.out.println(sTmpTime + " try to check PrintWriter.checkError() for inet address :\r\n"+aTmpConn.getRemoteSocketAddress());
 					if (out.checkError()) {
 						System.out.println("PrintWriter.checkError=true");
 						continue;
